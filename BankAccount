@@ -1,0 +1,39 @@
+class BankAccount
+  attr_reader :balance
+
+  def initialize(initial_balance = 0)
+    @balance = initial_balance
+  end
+
+  def add_balance(amount)
+    if amount > 0
+      @balance += amount
+      puts "Successfully deposited ₹#{amount}. Current balance: ₹#{@balance}"
+    else
+      puts "❌ Error: Deposit amount must be positive."
+    end
+  end
+
+  def withdraw(amount)
+    if amount > 0 && amount <= @balance
+      @balance -= amount
+      puts "Successfully withdrawn ₹#{amount}. Remaining balance: ₹#{@balance}"
+    elsif amount > @balance
+      puts "❌ Error: Insufficient balance."
+    else
+      puts "❌ Error: Withdrawal amount must be positive."
+    end
+  end
+
+  def check_balance
+    puts "💰 Current balance: ₹#{@balance}"
+  end
+end
+
+account = BankAccount.new(1000)
+account.check_balance
+account.add_balance(500)
+account.withdraw(300)
+account.add_balance(-200)
+account.withdraw(1500)
+account.check_balance
