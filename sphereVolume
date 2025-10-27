@@ -1,0 +1,16 @@
+proc sphereVolume {r} {
+    set pi 3.14159
+    set volume [expr {(4.0/3.0) * $pi * pow($r, 3)}]
+    return $volume
+}
+
+puts "Enter the radius of the sphere: "
+flush stdout
+gets stdin radius
+
+if {$radius <= 0} {
+    puts "❌ Error: Radius must be a positive number."
+} else {
+    set result [sphereVolume $radius]
+    puts "The volume of the sphere with radius $radius is: $result cubic units"
+}
