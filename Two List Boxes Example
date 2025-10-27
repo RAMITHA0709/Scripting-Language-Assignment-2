@@ -1,0 +1,41 @@
+wm title . "Two List Boxes Example"
+
+frame .f1
+frame .f2
+pack .f1 .f2 -side top -padx 10 -pady 10
+
+label .f1.l1 -text "Available Items"
+listbox .f1.lb1 -width 25 -height 10 -selectmode single
+scrollbar .f1.sb1 -orient vertical -command ".f1.lb1 yview"
+.f1.lb1 configure -yscrollcommand ".f1.sb1 set"
+
+pack .f1.l1 -side top
+pack .f1.lb1 .f1.sb1 -side left -fill y
+
+foreach item {Apple Banana Mango Orange Grapes Pineapple Watermelon Papaya Kiwi} {
+    .f1.lb1 insert end $item
+}
+
+label .f2.l2 -text "Selected Items"
+listbox .f2.lb2 -width 25 -height 10 -selectmode single
+scrollbar .f2.sb2 -orient vertical -command ".f2.lb2 yview"
+.f2.lb2 configure -yscrollcommand ".f2.sb2 set"
+
+pack .f2.l2 -side top
+pack .f2.lb2 .f2.sb2 -side left -fill y
+
+bind .f1.lb1 <<ListboxSelect>> {
+    set selected [.f1.lb1 get [.f1.lb1 curselection]]
+    if {[lsearch [.f2.lb2 get 0 end] $selected] == -1} {
+        .f2.lb2 insert end $selected
+    }
+}
+
+bind .f2.lb2 <<ListboxSelect>> {
+    set index [.f2.lb2 curselection]
+    if {$index ne ""} {
+        .f2.lb2 delete $index
+    }
+}
+
+tkwait window .
